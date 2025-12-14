@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>News Article - Newsmania</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/article.js"></script>
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">Newsmania</div>
+
+        <div class="profile-box">
+            <div id="profileBtn" class="profile-icon hidden" onclick="toggleProfileMenu()">
+                <span id="profileInitial"></span>
+            </div>
+
+            <div id="profileMenu" class="profile-menu hidden">
+                <p class="profile-name" id="profileName"></p>
+                <hr>
+                <a href="profile.html">Profile</a>
+                <a id="adminMenuLink" href="admin.html" class="hidden">Admin Panel</a>
+                <a href="#" onclick="logoutUser()">Logout</a>
+            </div>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="saved.html">Saved</a>
+            <a id="loginBtn" href="login.html" class="login-btn">Login</a>
+        </nav>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search news..." onkeyup="searchNews(event)">
+        </div>
+
+        <button id="themeToggle" class="theme-btn">🌙</button>
+
+    </header>
+
+    <div class="article-container">
+
+        <div class="article-card">
+            <img id="image" class="article-image" src="" alt="News image">
+
+            <h1 id="title" class="article-title"></h1>
+
+            <p id="content" class="article-content"></p>
+
+            <h3>Comments</h3>
+
+            <div id="comment-list">Loading comments...</div>
+
+            <div class="comment-box">
+                <textarea id="commentText" placeholder="Write a comment..."></textarea>
+                <button onclick="postComment()">Post Comment</button>
+            </div>
+
+            <div class="summary-section">
+                <h3>Summary</h3>
+                <p id="summary"></p>
+            </div>
+
+            <div class="translation-section">
+                <div class="translation-header">
+                    <h3>Translate Summary</h3>
+
+                    <div class="translate-controls">
+                        <select id="lang">
+                            <option value="en">English</option>
+                            <option value="hi">Hindi</option>
+                            <option value="kn">Kannada</option>
+                            <option value="te">Telugu</option>
+                            <option value="ta">Tamil</option>
+                        </select>
+
+                        <button onclick="translateNow()" class="translate-btn">
+                            Translate
+                        </button>
+                    </div>
+                </div>
+
+                <div id="translated" class="translation-output">
+                    <span class="placeholder">Translation will appear here...</span>
+                </div>
+            </div>
+            <button id="saveBtn" class="auth-btn" onclick="saveArticle()">Save Article</button>
+            <a id="originalLink" href="#" target="_blank" class="read-original">Read Original Article →</a>
+            <button class="pdf-btn" onclick="downloadPdf()">📄 Download PDF</button>
+        </div>
+
+    </div>
+
+    <script src="js/search.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/authHelper.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+const BASE = "http://localhost:3000";
+
+async function loadArticle() {
+    try {
+        let params = new URLSearchParams(location.search);
+        let id = params.get("id");
+
+        let token = localStorage.getItem("token");
+
+        let res = await fetch(`${BASE}/news/${id}`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        if (!res.ok) {
+            return alert("Failed to load article");
+        }
+
+        let a = await res.json();
+
+        document.getElementById("title").innerText = a.title;
+        document.getElementById("content").innerText = a.content || "";
+        document.getElementById("summary").innerText = a.summary || "No summary available";
+
+        document.getElementById("image").src = a.image_url || "assets/no-img.png";
+
+        document.getElementById("originalLink").href = a.url;
+
+        logActivity(id, "view");
+
+    } catch (err) {
+        console.error("loadArticle error:", err);
+    }
+}
+
+async function translateNow() {
+    let summaryText = document.getElementById("summary").innerText;
+    let lang = document.getElementById("lang").value;
+
+    let token = localStorage.getItem("token");
+
+    document.getElementById("translated").innerText = "⏳ Translating summary...";
+
+    let res = await fetch(`${BASE}/news/translate`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ text: summaryText, target: lang })
+    });
+
+    let data = await res.json();
+    document.getElementById("translated").innerText = data.translatedText;
+}
+
+async function saveArticle() {
+    let params = new URLSearchParams(location.search);
+    let id = params.get("id");
+    let token = localStorage.getItem("token");
+
+    let res = await fetch(`${BASE}/saved/save/${id}`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    let data = await res.json();
+    alert(data.message);
+
+    logActivity(id, "save");
+}
+
+async function saveInterests(categories) {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${BASE}/personalize/interests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ categories })
+    });
+    return await res.json();
+}
+
+async function logActivity(article_id, action) {
+    const token = localStorage.getItem('token');
+    try {
+        await fetch(`${BASE}/personalize/activity`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ article_id, action })
+        });
+    } catch (e) {
+        console.error('Could not log activity', e);
+    }
+}
+
+async function loadRecommendations() {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${BASE}/personalize/recommendations`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!res.ok) return console.error('Failed to load recommendations');
+
+    const articles = await res.json();
+    const container = document.getElementById('recommendations');
+    container.innerHTML = '';
+
+    articles.forEach(n => {
+        const el = document.createElement('div');
+        el.className = 'rec';
+        el.innerHTML = `
+            <h4>${n.title}</h4>
+            <p>${n.summary || ''}</p>
+            <a href="/frontend/article.html?id=${n.id}" onclick="logActivity(${n.id}, 'click')">Read</a>
+        `;
+        container.appendChild(el);
+    });
+}
+
+async function loadComments() {
+    let params = new URLSearchParams(location.search);
+    let id = params.get("id");
+
+    let res = await fetch(`http://localhost:3000/comments/${id}`);
+    let comments = await res.json();
+
+    let box = document.getElementById("comment-list");
+    box.innerHTML = "";
+
+    if (comments.length === 0) {
+        box.innerHTML = "<p>No comments yet.</p>";
+        return;
+    }
+
+    comments.forEach(c => {
+        box.innerHTML += `
+            <div class="comment-item">
+                <div class="comment-user">${c.username}</div>
+                <div>${c.comment}</div>
+                <div class="comment-time">${new Date(c.created_at).toLocaleString()}</div>
+            </div>
+        `;
+    });
+}
+
+async function postComment() {
+    let params = new URLSearchParams(location.search);
+    let id = params.get("id");
+
+    let token = localStorage.getItem("token");
+    let text = document.getElementById("commentText").value;
+
+    if (!text.trim()) {
+        alert("Comment cannot be empty");
+        return;
+    }
+
+    let res = await fetch(`http://localhost:3000/comments/${id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ comment: text })
+    });
+
+    let data = await res.json();
+
+    if (res.ok) {
+        document.getElementById("commentText").value = "";
+        loadComments(); 
+    } else {
+        alert(data.error);
+    }
+}
+
+function downloadPdf() {
+    let params = new URLSearchParams(location.search);
+    let id = params.get("id");
+
+    window.open(`http://localhost:3000/news/${id}/pdf`, "_blank");
+}
+
+loadArticle();
+loadComments();

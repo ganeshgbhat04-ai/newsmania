@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile - Newsmania</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <script>
+        if (!localStorage.getItem("token")) {
+            window.location.href = "login.html";
+        }
+    </script>
+
+    <header class="navbar">
+        <div class="logo">Newsmania</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+
+            <a id="loginBtn" href="login.html" class="login-btn">Login</a>
+
+            <div class="profile-box">
+                <div id="profileBtn" class="profile-icon hidden" onclick="toggleProfileMenu()">
+                    <span id="profileInitial"></span>
+                </div>
+
+                <div id="profileMenu" class="profile-menu hidden">
+                    <p class="profile-name" id="profileName"></p>
+                    <hr>
+
+                    <a href="profile.html">Profile</a>
+
+                    <a id="adminMenuLink" href="admin.html" class="hidden">Admin Panel</a>
+
+                    <a href="#" onclick="logoutUser()">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <select id="langSelect" class="lang-select">
+            <option value="en">EN</option>
+            <option value="hi">हिन्दी</option>
+            <option value="kn">ಕನ್ನಡ</option>
+            <option value="ta">தமிழ்</option>
+            <option value="te">తెలుగు</option>
+        </select>
+
+        <button id="themeToggle" class="theme-btn">🌙</button>
+    </header>
+
+    <section class="container">
+
+        <h2>Your Profile</h2>
+
+        <div class="profile-card">
+            <div class="profile-avatar-large">
+                <span id="profileAvatarLetter"></span>
+            </div>
+
+            <h3 id="profileUserName"></h3>
+            <p id="profileEmail"></p>
+
+            <p id="profileRole" style="margin-top:10px; font-weight:600;"></p>
+
+            <button class="auth-btn" onclick="logoutUser()" style="margin-top:20px;">
+                Logout
+            </button>
+        </div>
+
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const name = localStorage.getItem("userName") || "User";
+            const email = localStorage.getItem("email") || "Not available";
+            const isAdmin = localStorage.getItem("is_admin");
+
+            document.getElementById("profileUserName").innerText = name;
+            document.getElementById("profileEmail").innerText = email;
+            document.getElementById("profileAvatarLetter").innerText = name.charAt(0).toUpperCase();
+
+            document.getElementById("profileRole").innerHTML =
+                isAdmin == "1"
+                    ? "<span style='color:#d32f2f'>Admin Account</span>"
+                    : "<span style='color:#2e7d32'>Regular User</span>";
+        });
+    </script>
+
+    <script src="js/authHelper.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Categories - Newsmania</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">Newsmania</div>
+
+        <div class="profile-box">
+            <div id="profileBtn" class="profile-icon hidden" onclick="toggleProfileMenu()">
+                <span id="profileInitial"></span>
+            </div>
+
+            <div id="profileMenu" class="profile-menu hidden">
+                <p class="profile-name" id="profileName"></p>
+                <hr>
+                <a href="profile.html">Profile</a>
+                <a id="adminMenuLink" href="admin.html" class="hidden">Admin Panel</a>
+                <a href="#" onclick="logoutUser()">Logout</a>
+            </div>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="saved.html">Saved</a>
+            <a id="loginBtn" href="login.html" class="login-btn">Login</a>
+        </nav>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search news..." onkeyup="searchNews(event)">
+        </div>
+
+        <select id="langSelect" class="lang-select">
+            <option value="en">EN</option>
+            <option value="hi">हिन्दी</option>
+            <option value="kn">ಕನ್ನಡ</option>
+            <option value="ta">தமிழ்</option>
+            <option value="te">తెలుగు</option>
+        </select>
+
+        <button id="themeToggle" class="theme-btn">🌙</button>
+
+    </header>
+
+    <section class="container">
+
+        <div id="search-section" style="display:none;">
+            <h2>Search Results</h2>
+            <div id="search-results" class="news-container"></div>
+        </div>
+
+        <h2>Sponsored</h2>
+        <div id="global-ad" class="ad-box">Loading ad...</div>
+
+        <h2 data-text="trending">Trending Now</h2>
+        <div id="trending-container" class="trending-grid">
+            Loading trending news...
+        </div>
+
+        <h2 data-text="selectCategory">Select Category</h2>
+
+        <div class="category-grid">
+            <div class="category-card" onclick="loadCategory('india')">
+                <div class="cat-icon">🇮🇳</div>
+                <p>India</p>
+            </div>
+
+            <div class="category-card" onclick="loadCategory('technology')">
+                <div class="cat-icon">💻</div>
+                <p>Technology</p>
+            </div>
+
+            <div class="category-card" onclick="loadCategory('business')">
+                <div class="cat-icon">💼</div>
+                <p>Business</p>
+            </div>
+
+            <div class="category-card" onclick="loadCategory('sports')">
+                <div class="cat-icon">🏅</div>
+                <p>Sports</p>
+            </div>
+
+            <div class="category-card" onclick="loadCategory('world')">
+                <div class="cat-icon">🌍</div>
+                <p>World</p>
+            </div>
+
+            <div class="category-card" onclick="loadCategory('cultural')">
+                <div class="cat-icon">🎭</div>
+                <p>Cultural</p>
+            </div>
+
+            <div class="category-card" onclick="loadCategory('advertisements')">
+                <div class="cat-icon">📢</div>
+                <p>Advertisements</p>
+            </div>
+
+        </div>
+        </div>
+
+        <h2 data-text="categoryNews" style="margin-top:40px;">Category News</h2>
+        <div id="category-news" class="news-container">
+            Please select a category above.
+        </div>
+
+    </section>
+
+    <script src="js/categories.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+    <script src="js/authHelper.js"></script>
+    <script src="js/ads.js"></script>
+
+</body>
+
+</html>

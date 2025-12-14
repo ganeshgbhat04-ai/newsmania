@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Articles - Newsmania</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">Newsmania</div>
+        <div class="profile-box">
+            <div id="profileBtn" class="profile-icon hidden" onclick="toggleProfileMenu()">
+                <span id="profileInitial"></span>
+            </div>
+
+            <div id="profileMenu" class="profile-menu hidden">
+                <p class="profile-name" id="profileName"></p>
+                <hr>
+                <a href="profile.html">Profile</a>
+                <a id="adminMenuLink" class="hidden" href="admin.html">Admin Panel</a>
+                <a href="#" onclick="logoutUser()">Logout</a>
+            </div>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="saved.html">Saved</a>
+        </nav>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search news..." onkeyup="searchNews(event)">
+        </div>
+
+        <button id="themeToggle" class="theme-btn">🌙</button>
+    </header>
+
+    <section class="container">
+        <div id="search-section" style="display:none;">
+            <h2>Search Results</h2>
+            <div id="search-results" class="news-container"></div>
+        </div>
+        <h2>Your Saved Articles</h2>
+        <div id="saved-list" class="news-container">Loading...</div>
+    </section>
+
+    <script src="js/saved.js"></script>
+    <script src="js/authHelper.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/theme.js"></script>
+
+
+</body>
+
+</html>

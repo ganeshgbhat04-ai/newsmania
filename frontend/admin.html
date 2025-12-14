@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Newsmania</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <script defer src="js/admin.js"></script>
+</head>
+
+<body>
+
+<script>
+    if (!localStorage.getItem("token") || localStorage.getItem("is_admin") !== "1") {
+        alert("Access denied — Admins only!");
+        window.location.href = "login.html";
+    }
+</script>
+
+<div class="admin-container">
+
+    <aside class="sidebar">
+        <h2 class="logo">NEWSMANIA<br><span>ADMIN</span></h2>
+
+        <nav>
+            <a href="#" onclick="showSection('dashboard', event)" class="active">Dashboard</a>
+            <a href="#" onclick="showSection('articles', event)">Manage Articles</a>
+            <a href="#" onclick="showSection('users', event)">Manage Users</a>
+            <a href="index.html">Back to Website</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <section id="dashboard" class="section">
+            <h1>Dashboard Overview</h1>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Total Articles</h3>
+                    <p id="totalArticles">0</p>
+                </div>
+
+                <div class="card">
+                    <h3>Total Users</h3>
+                    <p id="totalUsers">0</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles" class="section hidden">
+            <h1>Manage Articles</h1>
+
+            <button class="add-btn" onclick="showAddArticlePopup()">+ Add New Article</button>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="articlesTable"></tbody>
+            </table>
+
+            <div class="pagination">
+                <button onclick="prevPage()">Prev</button>
+                <span id="pageNumber">1</span>
+                <button onclick="nextPage()">Next</button>
+            </div>
+        </section>
+
+        <section id="users" class="section hidden">
+            <h1>Manage Users</h1>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Admin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="usersTable"></tbody>
+            </table>
+        </section>
+
+    </main>
+</div>
+
+<div id="articlePopup" class="popup hidden">
+    <div class="popup-content">
+        <h2 id="popupTitle">Edit Article</h2>
+
+        <input type="text" id="popupTitleInput" placeholder="Title">
+        <input type="text" id="popupCategoryInput" placeholder="Category">
+        <textarea id="popupContentInput" placeholder="Content"></textarea>
+        <input type="text" id="popupImageInput" placeholder="Image URL">
+
+        <button class="save-btn" onclick="saveArticle()">Save</button>
+        <button class="close-btn" onclick="closePopup()">Cancel</button>
+    </div>
+</div>
+
+</body>
+</html>

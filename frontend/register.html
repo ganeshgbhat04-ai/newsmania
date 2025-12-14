@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Newsmania</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">Newsmania</div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="categories.html">Categories</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search news..." onkeyup="searchNews(event)">
+    </div>
+
+    <select id="langSelect" class="lang-select">
+        <option value="en">EN</option>
+        <option value="hi">हिन्दी</option>
+        <option value="kn">ಕನ್ನಡ</option>
+        <option value="ta">தமிழ்</option>
+        <option value="te">తెలుగు</option>
+    </select>
+
+    <button id="themeToggle" class="theme-btn">🌙</button>
+</header>
+
+<section class="container auth-container">
+
+    <h2 data-text="registerTitle">Register</h2>
+
+    <div class="login-card">
+        <label data-text="nameLabel">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name">
+
+        <label data-text="emailLabel">Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <label data-text="passwordLabel">Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+
+        <label data-text="confirmPasswordLabel">Confirm Password</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm your password">
+
+        <button class="auth-btn" onclick="registerUser()" data-text="registerBtn">Create Account</button>
+
+        <p class="signup-link">
+            <span data-text="haveAccount">Already have an account?</span>
+            <a href="login.html" data-text="loginNow">Login Now</a>
+        </p>
+    </div>
+
+</section>
+<script src="js/auth.js"></script>
+<script src="js/search.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/lang.js"></script>
+
+</body>
+</html>
