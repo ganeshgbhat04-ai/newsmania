@@ -1,23 +1,46 @@
 # Newsmania Backend Starter
 
-**Tech stack:** Node.js, Express.js, MySQL, EJS
+**Tech stack:** Node.js, Express.js, PostgreSQL, HTML, CSS, JavaScript
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and fill your credentials.
-2. Install dependencies:
+1. Install dependencies:
+
    ```
    cd backend
    npm install
    ```
-3. Create the database:
-   - Run `database/schema.sql` in your MySQL server (e.g., using MySQL Workbench or CLI).
-4. Start server:
+
+2. Create PostgreSQL database and run schema:
+
+   ```
+   psql -U <username> -d newsmania_db -f database/schema.sql
+   ```
+
+3. Create `.env` file inside `backend` with required credentials.
+
+4. Start the server:
+
+   ```
+   node server.js
+   ```
+
+   or
+
    ```
    npm run dev
    ```
-5. Open `http://localhost:3000`
+
+5. Open:
+
+   ```
+   http://localhost:3000/index.html
+   ```
 
 ## Notes
-- This starter includes a cron job that attempts to fetch news from NewsAPI if `NEWSAPI_KEY` is present in `.env`.
-- Summarization and translation endpoints are stubbed with simple fallbacks; integrate OpenAI / Google Translate as needed.
+
+* Frontend is served by Express
+* Uses JWT-based authentication
+* Includes admin panel and personalization
+* News fetching is handled via cron job
+* Articles can be downloaded as PDF for offline reading
