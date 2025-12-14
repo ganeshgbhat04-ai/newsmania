@@ -34,7 +34,7 @@ CREATE TABLE saved_articles (
 CREATE TABLE user_interests (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-    category TEXT
+    category TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
