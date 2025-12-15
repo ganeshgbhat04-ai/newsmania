@@ -1,7 +1,7 @@
 async function loadSaved() {
     const token = localStorage.getItem("token");
 
-    let res = await fetch("http://localhost:3000/saved/list", {
+    let res = await fetch("https://ds9ck7p9-3000.inc1.devtunnels.ms/saved/list", {
         headers: { "Authorization": `Bearer ${token}` }
     });
 
@@ -37,7 +37,7 @@ async function loadSaved() {
 async function removeSaved(id) {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:3000/saved/remove/${id}`, {
+    await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/saved/remove/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
     });

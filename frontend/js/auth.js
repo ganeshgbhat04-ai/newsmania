@@ -4,7 +4,7 @@ async function registerUser() {
     let password = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirmPassword").value;
 
-    let res = await fetch("http://localhost:3000/auth/register", {
+    let res = await fetch("https://ds9ck7p9-3000.inc1.devtunnels.ms/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, confirmPassword })
@@ -24,7 +24,7 @@ async function loginUser() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
 
-    let res = await fetch("http://localhost:3000/auth/login", {
+    let res = await fetch("https://ds9ck7p9-3000.inc1.devtunnels.ms/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })

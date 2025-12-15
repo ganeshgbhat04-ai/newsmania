@@ -17,7 +17,7 @@ async function searchNews(event) {
 
         let token = localStorage.getItem("token");
 
-        let res = await fetch(`http://localhost:3000/news/search/${keyword}`, {
+        let res = await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/news/search/${keyword}`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
         let data = await res.json();

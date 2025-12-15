@@ -17,12 +17,12 @@ function showSection(id, ev) {
 async function loadDashboard() {
     try {
         let articles = await fetch(
-            `http://localhost:3000/admin/articles?page=${currentPage}`,
+            `https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/articles?page=${currentPage}`,
             { headers: { "Authorization": `Bearer ${token}` } }
         );
 
         let users = await fetch(
-            "http://localhost:3000/admin/users",
+            "https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/users",
             { headers: { "Authorization": `Bearer ${token}` } }
         );
 
@@ -83,7 +83,7 @@ function loadUsersTable(data) {
 async function deleteArticle(id) {
     if (!confirm("Delete this article?")) return;
 
-    await fetch(`http://localhost:3000/admin/article/${id}`, {
+    await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
     });
@@ -94,7 +94,7 @@ async function deleteArticle(id) {
 async function deleteUser(id) {
     if (!confirm("Delete this user?")) return;
 
-    await fetch(`http://localhost:3000/admin/user/${id}`, {
+    await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/user/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
     });
@@ -119,7 +119,7 @@ function showAddArticlePopup() {
 async function editArticle(id) {
     editingId = id;
 
-    let res = await fetch(`http://localhost:3000/admin/article/${id}`, {
+    let res = await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article/${id}`, {
         headers: { "Authorization": `Bearer ${token}` }
     });
 
@@ -147,8 +147,8 @@ async function saveArticle() {
     };
 
     let url = editingId
-        ? `http://localhost:3000/admin/article/${editingId}`
-        : "http://localhost:3000/admin/article";
+        ? `https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article/${editingId}`
+        : "https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article";
 
     let method = editingId ? "PUT" : "POST";
 

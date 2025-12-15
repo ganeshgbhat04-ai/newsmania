@@ -1,6 +1,6 @@
 async function loadAd() {
     try {
-        let res = await fetch("http://localhost:3000/ads/random");
+        let res = await fetch("https://ds9ck7p9-3000.inc1.devtunnels.ms/ads/random");
         let ad = await res.json();
 
         let box = document.getElementById("global-ad");

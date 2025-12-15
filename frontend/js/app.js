@@ -5,7 +5,7 @@ async function loadNews() {
 
         let token = localStorage.getItem("token");
 
-        let res = await fetch("http://localhost:3000/news/latest", {
+        let res = await fetch("https://ds9ck7p9-3000.inc1.devtunnels.ms/news/latest", {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
