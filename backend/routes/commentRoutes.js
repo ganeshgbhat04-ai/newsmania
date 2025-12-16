@@ -3,7 +3,6 @@ const router = express.Router();
 const pool = require("../config/db");
 const auth = require("../middleware/authMiddleware");
 
-// 1️⃣ Add Comment
 router.post("/:articleId", auth, async (req, res) => {
     try {
         const userId = req.user.id;
@@ -26,7 +25,6 @@ router.post("/:articleId", auth, async (req, res) => {
     }
 });
 
-// 2️⃣ Get Comments for Article
 router.get("/:articleId", async (req, res) => {
     try {
         const articleId = req.params.articleId;
