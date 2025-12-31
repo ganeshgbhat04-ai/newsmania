@@ -12,18 +12,40 @@ async function loadArticle() {
         });
 
         if (!res.ok) {
-            return alert("Failed to load article");
+            alert("Failed to load article");
+            return;
         }
 
         let a = await res.json();
 
-        document.getElementById("title").innerText = a.title;
-        document.getElementById("content").innerText = a.content || "";
-        document.getElementById("summary").innerText = a.summary || "No summary available";
+        document.getElementById("title").innerText = a.title || "";
 
-        document.getElementById("image").src = a.image_url || "assets/no-img.png";
+        const contentEl = document.getElementById("content");
+        const originalLink = document.getElementById("originalLink");
 
-        document.getElementById("originalLink").href = a.url;
+        let content = a.content || "";
+
+        const charsPattern = /\[\d+\s*chars\]/;
+
+        if (charsPattern.test(content)) {
+            content = content.replace(
+                charsPattern,
+                `<br><a href="${a.url}" target="_blank" class="read-original">Read More →</a>`
+            );
+
+            originalLink.style.display = "none";
+        } else {
+            originalLink.href = a.url;
+            originalLink.style.display = "inline-block";
+        }
+
+        contentEl.innerHTML = content;
+
+        document.getElementById("summary").innerText =
+            a.summary || "No summary available";
+
+        document.getElementById("image").src =
+            a.image_url || "assets/no-img.png";
 
         logActivity(id, "view");
 
@@ -31,6 +53,7 @@ async function loadArticle() {
         console.error("loadArticle error:", err);
     }
 }
+
 
 async function translateNow() {
     let summaryText = document.getElementById("summary").innerText;
