@@ -54,7 +54,6 @@ async function loadArticle() {
     }
 }
 
-
 async function translateNow() {
     let summaryText = document.getElementById("summary").innerText;
     let lang = document.getElementById("lang").value;
