@@ -47,7 +47,7 @@ module.exports = async function fetchNewsJob() {
       for (const a of articles) {
         const title = safe(a.title);
         const content = safe(a.content);
-        const summary = safe(a.description ? trimText(a.description, 300) : trimText(content || "", 300));
+        const summary = safe(a.description ? trimText(a.description, 1000) : trimText(content || "", 1000));
         const image = a.image || "";
         const urlArticle = a.url || "";
         const source = safe(a.source?.name || "unknown");

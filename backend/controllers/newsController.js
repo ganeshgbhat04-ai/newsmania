@@ -77,10 +77,10 @@ Only return the translated content.
 
 const downloadPdf = async (req, res) => {
     try {
-        const id = req.params.id;
+        const { id } = req.params;
 
         const { rows } = await pool.query(
-            "SELECT title, summary, source, published_at FROM news WHERE id = $1",
+            "SELECT title, summary, image_url FROM news WHERE id = $1",
             [id]
         );
 
@@ -91,35 +91,43 @@ const downloadPdf = async (req, res) => {
         const article = rows[0];
 
         const doc = new PDFDocument({ margin: 50 });
-
         res.setHeader("Content-Type", "application/pdf");
         res.setHeader(
             "Content-Disposition",
-            `attachment; filename="${article.title.replace(/[^a-z0-9]/gi, "_")}.pdf"`
+            `attachment; filename="news_${id}.pdf"`
         );
 
         doc.pipe(res);
 
-        doc.fontSize(20).text(article.title, { align: "center" }).moveDown();
+        doc.fontSize(18).text(article.title, { align: "center" });
+        doc.moveDown(1);
 
-        doc.fontSize(10)
-            .text(`Source: ${article.source || "Unknown"}`)
-            .text(`Published: ${new Date(article.published_at).toDateString()}`)
-            .moveDown();
+        if (article.image_url) {
+            try {
+                const imgRes = await axios.get(article.image_url, {
+                    responseType: "arraybuffer"
+                });
+                doc.image(imgRes.data, {
+                    fit: [450, 250],
+                    align: "center"
+                });
+                doc.moveDown(1);
+            } catch (imgErr) {
+                console.warn("Image load failed, skipping image");
+            }
+        }
 
-        doc.fontSize(14).text("Summary", { underline: true }).moveDown(0.5);
-
-        doc.fontSize(12).text(
-            article.summary || "No summary available",
-            { align: "justify" }
-        );
+        doc.fontSize(12).text(article.summary, {
+            align: "justify"
+        });
 
         doc.end();
 
     } catch (err) {
         console.error("PDF ERROR:", err);
-        res.status(500).json({ error: "Failed to generate PDF" });
+        res.status(500).json({ error: "PDF generation failed" });
     }
 };
+
 
 module.exports = { latest, getById, translate, downloadPdf};
