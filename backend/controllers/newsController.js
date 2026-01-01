@@ -47,11 +47,13 @@ const translate = async (req, res) => {
             return res.status(400).json({ error: "Missing text or target language" });
 
         const prompt = `
-        Translate this NEWS HEADLINE into language: ${target}.
-        Only return the translated headline.
+Translate the following NEWS SUMMARY into the language: ${target}.
+Return a single readable paragraph.
+Do not add explanations or extra text.
+Only return the translated content.
 
-        "${text}"
-        `;
+"${text}"
+`;
 
         const response = await axios.post(
             `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,

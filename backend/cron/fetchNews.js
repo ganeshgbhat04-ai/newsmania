@@ -5,7 +5,11 @@ function safe(text) {
   if (!text) return "";
   return String(text);
 }
-
+function trimText(text, max) {
+  if (!text) return "";
+  if (text.length <= max) return text;
+  return text.slice(0, max).split(" ").slice(0, -1).join(" ");
+}
 module.exports = async function fetchNewsJob() {
   try {
     const API_KEY = process.env.GNEWS_API_KEY;
@@ -15,11 +19,11 @@ module.exports = async function fetchNewsJob() {
     }
 
     const normalTopics = [
-      "india","technology","business","sports","world","cultural"
+      "india", "technology", "business", "sports", "world", "cultural"
     ];
 
     const adKeywords = [
-      "advertisement","advertisement campaign","commercial","promotion","marketing","brand campaign","product launch","ad release"
+      "advertisement", "advertisement campaign", "commercial", "promotion", "marketing", "brand campaign", "product launch", "ad release"
     ];
 
     const allTopics = [...normalTopics, ...adKeywords];
@@ -43,7 +47,7 @@ module.exports = async function fetchNewsJob() {
       for (const a of articles) {
         const title = safe(a.title);
         const content = safe(a.content);
-        const summary = safe(a.description || (content || "").slice(0, 220));
+        const summary = safe(a.description ? trimText(a.description, 300) : trimText(content || "", 300));
         const image = a.image || "";
         const urlArticle = a.url || "";
         const source = safe(a.source?.name || "unknown");
@@ -92,8 +96,8 @@ module.exports = async function fetchNewsJob() {
         } catch (insertErr) {
           console.error("Insert error:", insertErr.message || insertErr);
         }
-      } 
-    } 
+      }
+    }
 
     console.log("fetchNewsJob finished");
   } catch (err) {

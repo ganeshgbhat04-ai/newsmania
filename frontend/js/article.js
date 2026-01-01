@@ -55,24 +55,33 @@ async function loadArticle() {
 }
 
 async function translateNow() {
-    let summaryText = document.getElementById("summary").innerText;
-    let lang = document.getElementById("lang").value;
+    const summaryText = document.getElementById("summary").innerText;
+    const lang = document.getElementById("lang").value;
+    const token = localStorage.getItem("token");
 
-    let token = localStorage.getItem("token");
+    if (!summaryText.trim()) {
+        alert("No summary available to translate");
+        return;
+    }
 
     document.getElementById("translated").innerText = "⏳ Translating summary...";
 
-    let res = await fetch(`${BASE}/news/translate`, {
+    const res = await fetch("http://localhost:3000/news/translate", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ text: summaryText, target: lang })
+        body: JSON.stringify({
+            text: summaryText,
+            target: lang
+        })
     });
 
-    let data = await res.json();
-    document.getElementById("translated").innerText = data.translatedText;
+    const data = await res.json();
+
+    document.getElementById("translated").innerText =
+        data.translatedText || "Translation failed";
 }
 
 async function saveArticle() {
