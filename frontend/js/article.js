@@ -1,4 +1,4 @@
-const BASE = "https://ds9ck7p9-3000.inc1.devtunnels.ms";
+const BASE = "";
 
 async function loadArticle() {
     try {
@@ -151,7 +151,7 @@ async function loadComments() {
     let params = new URLSearchParams(location.search);
     let id = params.get("id");
 
-    let res = await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/comments/${id}`);
+    let res = await fetch(`/comments/${id}`);
     let comments = await res.json();
 
     let box = document.getElementById("comment-list");
@@ -185,7 +185,7 @@ async function postComment() {
         return;
     }
 
-    let res = await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/comments/${id}`, {
+    let res = await fetch(`/comments/${id}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -208,7 +208,7 @@ function downloadPdf() {
     let params = new URLSearchParams(location.search);
     let id = params.get("id");
 
-    window.open(`https://ds9ck7p9-3000.inc1.devtunnels.ms/news/${id}/pdf`, "_blank");
+    window.open(`/news/${id}/pdf`, "_blank");
 }
 
 loadArticle();

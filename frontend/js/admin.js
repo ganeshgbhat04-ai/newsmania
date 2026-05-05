@@ -17,12 +17,12 @@ function showSection(id, ev) {
 async function loadDashboard() {
     try {
         let articles = await fetch(
-            `https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/articles?page=${currentPage}`,
+            `/admin/articles?page=${currentPage}`,
             { headers: { "Authorization": `Bearer ${token}` } }
         );
 
         let users = await fetch(
-            "https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/users",
+            "/admin/users",
             { headers: { "Authorization": `Bearer ${token}` } }
         );
 
@@ -83,7 +83,7 @@ function loadUsersTable(data) {
 async function deleteArticle(id) {
     if (!confirm("Delete this article?")) return;
 
-    await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article/${id}`, {
+    await fetch(`/admin/article/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
     });
@@ -94,7 +94,7 @@ async function deleteArticle(id) {
 async function deleteUser(id) {
     if (!confirm("Delete this user?")) return;
 
-    await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/user/${id}`, {
+    await fetch(`/admin/user/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
     });
@@ -119,7 +119,7 @@ function showAddArticlePopup() {
 async function editArticle(id) {
     editingId = id;
 
-    let res = await fetch(`https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article/${id}`, {
+    let res = await fetch(`/admin/article/${id}`, {
         headers: { "Authorization": `Bearer ${token}` }
     });
 
@@ -147,8 +147,8 @@ async function saveArticle() {
     };
 
     let url = editingId
-        ? `https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article/${editingId}`
-        : "https://ds9ck7p9-3000.inc1.devtunnels.ms/admin/article";
+        ? `/admin/article/${editingId}`
+        : "/admin/article";
 
     let method = editingId ? "PUT" : "POST";
 
